@@ -1,0 +1,27 @@
+name: Build and Package iOS App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_package:
+    name: Build and Package
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Build and package iOS app
+        uses: sparkfabrik/ios-build-action@v2.3.2
+        with:
+          configuration: Release
+          export-method: app-store
+          project-path: ${{ secrets.PROJECT_PATH }}
+          team-id: ${{ secrets.TEAM_ID }}
+          team-name: ${{ secrets.TEAM_NAME }}
+          ios-app-id: com.keepassium.ios
